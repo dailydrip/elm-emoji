@@ -9,6 +9,12 @@ module Emoji
         )
 
 {-| A searchable emoji database
+
+# Types
+@doc Emoji, Emojis
+
+# Functions
+@doc string, search, toList, emojis
 -}
 
 import Dict exposing (Dict)
