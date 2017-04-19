@@ -8,8 +8,7 @@ module Emoji
         , string
         )
 
-{-|
-    A searchable emoji database
+{-| A searchable emoji database
 -}
 
 import Dict exposing (Dict)
@@ -23,24 +22,21 @@ type Emojis
     = Emojis (Dict String Emoji)
 
 
-{-|
-    Get the string for an emoji
+{-| Get the string for an emoji
 -}
 string : Emoji -> String
 string (Emoji emojiString _ _) =
     emojiString
 
 
-{-|
-    Turn an `Emojis` into a list of `( key, emoji )`
+{-| Turn an `Emojis` into a list of `( key, emoji )`
 -}
 toList : Emojis -> List ( String, Emoji )
 toList (Emojis dict) =
     Dict.toList dict
 
 
-{-|
-    Test if an emoji contains a search string in any of its common names
+{-| Test if an emoji contains a search string in any of its common names
 -}
 emojiContains : String -> String -> Emoji -> Bool
 emojiContains prefix key (Emoji _ _ commonNames) =
@@ -48,8 +44,7 @@ emojiContains prefix key (Emoji _ _ commonNames) =
         |> List.any (String.contains prefix)
 
 
-{-|
-    Search for an emoji by common name part
+{-| Search for an emoji by common name part
 -}
 search : String -> Emojis -> Emojis
 search prefix (Emojis dict) =
@@ -58,8 +53,7 @@ search prefix (Emojis dict) =
         |> Emojis
 
 
-{-|
-    All of the emojis
+{-| All of the emojis
 -}
 emojis : Emojis
 emojis =
