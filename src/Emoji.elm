@@ -10,20 +10,30 @@ module Emoji
 
 {-| A searchable emoji database
 
+This is a simple Elm package that collects all of the emoji into a module and
+provides a means of searching the database for a given emoji.
+
+There's an example emoji picker app that uses it in [the repository's `example`
+directory.](https://github.com/dailydrip/elm-emoji/tree/master/example)
+
 # Types
-@doc Emoji, Emojis
+@docs Emoji, Emojis
 
 # Functions
-@doc string, search, toList, emojis
+@docs string, search, toList, emojis
 -}
 
 import Dict exposing (Dict)
 
 
+{-| An opaque type for an Emoji
+-}
 type Emoji
     = Emoji String String (List String)
 
 
+{-| An opaque type for the Emoji database
+-}
 type Emojis
     = Emojis (Dict String Emoji)
 
