@@ -1,37 +1,71 @@
-module Emoji exposing (Emoji, Emojis, emojis, toList, search)
+module Emoji
+    exposing
+        ( Emoji
+        , Emojis
+        , emojis
+        , toList
+        , search
+        , string
+        )
+
+{-|
+    A searchable emoji database
+-}
 
 import Dict exposing (Dict)
 
 
-type alias Emoji =
-    ( String, String, List String )
+type Emoji
+    = Emoji String String (List String)
 
 
-type alias Emojis =
-    Dict String Emoji
+type Emojis
+    = Emojis (Dict String Emoji)
 
 
+{-|
+    Get the string for an emoji
+-}
+string : Emoji -> String
+string (Emoji emojiString _ _) =
+    emojiString
+
+
+{-|
+    Turn an `Emojis` into a list of `( key, emoji )`
+-}
 toList : Emojis -> List ( String, Emoji )
-toList =
-    Dict.toList
+toList (Emojis dict) =
+    Dict.toList dict
 
 
+{-|
+    Test if an emoji contains a search string in any of its common names
+-}
 emojiContains : String -> String -> Emoji -> Bool
-emojiContains prefix key ( emojiString, emojiName, commonNames ) =
+emojiContains prefix key (Emoji _ _ commonNames) =
     commonNames
         |> List.any (String.contains prefix)
 
 
+{-|
+    Search for an emoji by common name part
+-}
 search : String -> Emojis -> Emojis
-search prefix emojis =
-    emojis
+search prefix (Emojis dict) =
+    dict
         |> Dict.filter (emojiContains prefix)
+        |> Emojis
 
 
+{-|
+    All of the emojis
+-}
 emojis : Emojis
 emojis =
     emojiList
         |> Dict.fromList
+        |> Emojis
 
 
 emojiList : List ( String, Emoji )
@@ -195,3 +229,4 @@ emojiList =
     , ( "1f191", ( "\xD83C\xDD91", "cl", [ "cl" ] ) )
     , ( "1f192", ( "\xD83C\xDD92", "cool", [ "cool" ] ) )
     ]
+        |> List.map (\( k, ( a, b, c ) ) -> ( k, Emoji a b c ))

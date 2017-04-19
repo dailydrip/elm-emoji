@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Dict exposing (Dict)
-import Emoji exposing (Emoji, emojis)
+import Emoji exposing (Emoji(..), emojis)
 
 
 type alias Model =
@@ -49,8 +49,8 @@ view model =
     let
         selectedEmojiString =
             case model.selectedEmoji of
-                Just ( emojiString, emojiName, commonNames ) ->
-                    emojiString
+                Just emoji ->
+                    Emoji.string emoji
 
                 Nothing ->
                     "No selection"
@@ -81,9 +81,9 @@ viewEmojiList searchPrefix =
 
 
 viewEmoji : ( String, Emoji ) -> Html Msg
-viewEmoji ( key, ( emojiString, emojiName, commonNames ) as emoji ) =
+viewEmoji ( key, emoji ) =
     div
         [ class "emoji"
         , onClick <| SelectEmoji emoji
         ]
-        [ text emojiString ]
+        [ text <| Emoji.string emoji ]
